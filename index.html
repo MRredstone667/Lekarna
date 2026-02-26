@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ochrana.cz | Bezpečný Sex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Ochrana.cz 🛡️</div>
+        <ul>
+            <li><a href="#" onclick="showSection('home')">Domů</a></li>
+            <li><a href="#" onclick="showSection('how-to')">Jak na to?</a></li>
+            <li><a href="#" onclick="showSection('shop')">E-Shop</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-wrapper">
+        
+        <div class="content-area">
+            
+            <section id="home" class="page-section active">
+                <div class="hero">
+                    <h1>BEZPEČNÝ SEX</h1>
+                    <p>Žádný stres, jsme v tom s tebou.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="showSection('how-to')">Chci vědět víc</button>
+                        <button class="btn-secondary" onclick="showSection('shop')">Přejít do e-shopu</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-to" class="page-section">
+                <div class="section-header">
+                    <h2>Hlavně žádný stres!</h2>
+                    <p>Sex má být o radosti a důvěře. Když víš, jak se chránit, můžeš si ho užít naplno bez zbytečných obav. Tady je přehled 5 top metod ochrany, které ti kryjí záda.</p>
+                </div>
+
+                <div class="methods-list">
+                    <div class="method-card">
+                        <h3>1. Klasický kondom</h3>
+                        <ul>
+                            <li><strong>✅ Výhody:</strong> Ochrana před otěhotněním i pohlavními nemocemi (STD).</li>
+                            <li><strong>❌ Nevýhody:</strong> Někomu může mírně snižovat citlivost.</li>
+                            <li><strong>⚠️ Rizika:</strong> Při špatném nasazení může prasknout nebo sklouznout.</li>
+                        </ul>
+                        <button class="btn-buy" onclick="addToCart('Klasický kondom (3ks)', 59)">Koupit hned - 59 Kč</button>
+                    </div>
+
+                    <div class="method-card">
+                        <h3>2. Tenký kondom (Ultra Thin)</h3>
+                        <ul>
+                            <li><strong>✅ Výhody:</strong> Maximální citlivost, pocit "kůže na kůži".</li>
+                            <li><strong>❌ Nevýhody:</strong> Obvykle o něco dražší než klasika.</li>
+                            <li><strong>⚠️ Rizika:</strong> Vyžaduje opatrnější manipulaci (např. pozor na nehty).</li>
+                        </ul>
+                        <button class="btn-buy" onclick="addToCart('Tenký kondom (3ks)', 89)">Koupit hned - 89 Kč</button>
+                    </div>
+
+                    <div class="method-card">
+                        <h3>3. Lubrikační gel (Vodní báze)</h3>
+                        <ul>
+                            <li><strong>✅ Výhody:</strong> Zabraňuje odřeninám, zvyšuje komfort a potěšení.</li>
+                            <li><strong>❌ Nevýhody:</strong> Může rychleji zasychat, nutno přidávat.</li>
+                            <li><strong>⚠️ Rizika:</strong> Pozor – na latexové kondomy nepoužívej gely na olejové bázi! Naše vodní báze je 100% bezpečná.</li>
+                        </ul>
+                        <button class="btn-buy" onclick="addToCart('Lubrikační gel (Vodní)', 149)">Koupit hned - 149 Kč</button>
+                    </div>
+
+                    <div class="method-card">
+                        <h3>4. Dámský kondom</h3>
+                        <ul>
+                            <li><strong>✅ Výhody:</strong> Lze zavést už před sexem, chrání i vnější část genitálií.</li>
+                            <li><strong>❌ Nevýhody:</strong> Vyžaduje trochu cviku při zavádění.</li>
+                            <li><strong>⚠️ Rizika:</strong> Může se při neopatrném pohybu posunout.</li>
+                        </ul>
+                        <button class="btn-buy" onclick="addToCart('Dámský kondom (1ks)', 120)">Koupit hned - 120 Kč</button>
+                    </div>
+
+                    <div class="method-card">
+                        <h3>5. Antikoncepční pěna (Spermicid)</h3>
+                        <ul>
+                            <li><strong>✅ Výhody:</strong> Nenarušuje hormony, působí jako lubrikant.</li>
+                            <li><strong>❌ Nevýhody:</strong> <strong>Nechrání před STD!</strong> (Pohlavními nemocemi).</li>
+                            <li><strong>⚠️ Rizika:</strong> Nižší ochrana proti otěhotnění než kondom, ideální spíše jako doplněk.</li>
+                        </ul>
+                        <button class="btn-buy" onclick="addToCart('Antikoncepční pěna', 199)">Koupit hned - 199 Kč</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="shop" class="page-section">
+                <div class="section-header">
+                    <h2>E-Shop</h2>
+                    <p>Vyber si přesně to, co potřebuješ pro bezpečný zážitek.</p>
+                </div>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="img-placeholder">🍓</div>
+                        <h3>Kondomy Jahoda</h3>
+                        <p>150 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Kondomy Jahoda', 150)">Do košíku</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="img-placeholder">💦</div>
+                        <h3>Lubrikant Aqua</h3>
+                        <p>220 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Lubrikant Aqua', 220)">Do košíku</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="img-placeholder">🍌</div>
+                        <h3>Kondomy XXL</h3>
+                        <p>180 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Kondomy XXL', 180)">Do košíku</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <aside class="global-cart">
+            <h2>Tvůj Košík 🛒</h2>
+            <ul id="cart-items">
+                <li id="empty-msg">Košík je prázdný</li>
+            </ul>
+            <div class="total">
+                <strong>Celkem: <span id="total-price">0</span> Kč</strong>
+            </div>
+            <button class="btn-order" onclick="alert('Toto je pouze demo lékárny. Objednávka se nikam neodeslala. 😊')">Objednat</button>
+        </aside>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
