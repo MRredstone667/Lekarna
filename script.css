@@ -1,0 +1,61 @@
+let cart = [];
+let total = 0;
+
+// Přepínání stránek
+function showSection(sectionId) {
+    // Najde všechny sekce a odebere jim třídu 'active'
+    document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Přidá třídu 'active' té sekci, na kterou se kliklo (CSS se postará o zobrazení a animaci)
+    document.getElementById(sectionId).classList.add('active');
+    
+    // Pokud jsme na mobilu a jdeme nakupovat, posuneme stránku lehce nahoru
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Přidání do košíku
+function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCartUI();
+    
+    // Malý vizuální efekt na tlačítku "Objednat"
+    const orderBtn = document.querySelector('.btn-order');
+    orderBtn.style.transform = 'scale(1.05)';
+    setTimeout(() => { orderBtn.style.transform = 'scale(1)'; }, 200);
+}
+
+// Odebrání z košíku
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+}
+
+// Vykreslení košíku
+function updateCartUI() {
+    const cartList = document.getElementById('cart-items');
+    const totalDisplay = document.getElementById('total-price');
+    
+    cartList.innerHTML = "";
+    total = 0;
+
+    if (cart.length === 0) {
+        cartList.innerHTML = '<li id="empty-msg" style="color: #6c757d;">Košík je prázdný</li>';
+    } else {
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${item.name}</span>
+                <span>
+                    <strong>${item.price} Kč</strong>
+                    <button class="remove-btn" onclick="removeFromCart(${index})" title="Odebrat">×</button>
+                </span>
+            `;
+            cartList.appendChild(li);
+            total += item.price;
+        });
+    }
+    
+    totalDisplay.innerText = total;
+}
