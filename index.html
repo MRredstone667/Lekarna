@@ -4,29 +4,182 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ochrana.cz | Bezpečný Sex</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        :root {
+            --primary: #20c997; /* Lékárenská mentolová */
+            --primary-hover: #17a589;
+            --dark: #2c3e50;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --gray-text: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Montserrat, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigace */
+        nav {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        nav ul { display: flex; list-style: none; gap: 20px; padding: 0; }
+        nav a { text-decoration: none; color: var(--dark); font-weight: bold; transition: color 0.3s; cursor: pointer; }
+        nav a:hover { color: var(--primary); }
+
+        /* Hlavní rozvržení */
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .content-area {
+            flex: 3;
+            padding: 40px 5%;
+        }
+
+        /* Skrývání a plynulé zobrazení sekcí */
+        .page-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tlačítka */
+        button { font-family: inherit; }
+        .btn-primary, .btn-secondary, .btn-buy, .btn-order {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary, .btn-buy, .btn-order { background: var(--primary); color: white; }
+        .btn-primary:hover, .btn-buy:hover, .btn-order:hover { 
+            background: var(--primary-hover); 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 10px rgba(32, 201, 151, 0.3); 
+        }
+        .btn-secondary { background: white; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-secondary:hover { background: var(--primary); color: white; }
+
+        /* Úvodní strana */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+        .hero h1 { font-size: 3.5rem; color: var(--primary); margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; color: var(--gray-text); margin-bottom: 30px; }
+
+        /* Společná hlavička pro sekce */
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { color: var(--primary); font-size: 2.5rem; margin-bottom: 10px;}
+
+        /* Jak na to (Metody) */
+        .methods-list { display: flex; flex-direction: column; gap: 20px; }
+        .method-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border-left: 5px solid var(--primary);
+        }
+        .method-card h3 { margin-top: 0; color: var(--dark); }
+        .method-card ul { list-style: none; padding: 0; margin-bottom: 20px; line-height: 1.6; }
+        .method-card li { margin-bottom: 8px; }
+
+        /* E-Shop */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        .product-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.06); }
+        .img-placeholder { font-size: 50px; background: var(--light-bg); padding: 30px; border-radius: 10px; margin-bottom: 15px; }
+
+        /* Košík (Pravý panel) */
+        .global-cart {
+            flex: 1;
+            min-width: 300px;
+            max-width: 350px;
+            background: white;
+            padding: 30px 20px;
+            border-left: 1px solid #e9ecef;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.02);
+        }
+        .global-cart h2 { margin-top: 0; color: var(--primary); border-bottom: 2px solid var(--light-bg); padding-bottom: 10px; }
+        #cart-items { list-style: none; padding: 0; min-height: 100px; }
+        #cart-items li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+        .remove-btn {
+            background: #ff6b6b; color: white; border: none; border-radius: 50%; width: 24px; height: 24px;
+            cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center;
+        }
+        .total { font-size: 1.2rem; margin: 20px 0; padding-top: 10px; border-top: 2px solid var(--light-bg); }
+        .btn-order { width: 100%; font-size: 1.1rem; padding: 15px; }
+
+        /* Responzivita (Mobily) */
+        @media (max-width: 850px) {
+            .main-wrapper { flex-direction: column; }
+            .global-cart { max-width: 100%; border-left: none; border-top: 2px solid #e9ecef; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); }
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { gap: 10px; font-size: 0.9rem; }
+        }
+    </style>
 </head>
 <body>
 
     <nav>
         <div class="logo">Ochrana.cz 🛡️</div>
         <ul>
-            <li><a href="#" onclick="showSection('home')">Domů</a></li>
-            <li><a href="#" onclick="showSection('how-to')">Jak na to?</a></li>
-            <li><a href="#" onclick="showSection('shop')">E-Shop</a></li>
+            <li><a onclick="showSection('home')">Domů</a></li>
+            <li><a onclick="showSection('how-to')">Jak na to?</a></li>
+            <li><a onclick="showSection('shop')">E-Shop</a></li>
         </ul>
     </nav>
 
     <div class="main-wrapper">
-        
         <div class="content-area">
             
             <section id="home" class="page-section active">
                 <div class="hero">
                     <h1>BEZPEČNÝ SEX</h1>
-                    <p>Žádný stres, jsme v tom s tebou.</p>
+                    <p>Chraň sebe i ostatní. Spolehlivě proti nemocem i nechtěnému těhotenství.</p>
                     <div class="hero-buttons">
-                        <button class="btn-primary" onclick="showSection('how-to')">Chci vědět víc</button>
+                        <button class="btn-primary" onclick="showSection('how-to')">Zobrazit Top 5 metod</button>
                         <button class="btn-secondary" onclick="showSection('shop')">Přejít do e-shopu</button>
                     </div>
                 </div>
@@ -34,86 +187,93 @@
 
             <section id="how-to" class="page-section">
                 <div class="section-header">
-                    <h2>Hlavně žádný stres!</h2>
-                    <p>Sex má být o radosti a důvěře. Když víš, jak se chránit, můžeš si ho užít naplno bez zbytečných obav. Tady je přehled 5 top metod ochrany, které ti kryjí záda.</p>
+                    <h2>Top 5 způsobů ochrany</h2>
+                    <p>Vybrali jsme pět nejúčinnějších a vzájemně se doplňujících produktů. Žádné zbytečnosti, jen to nejdůležitější pro tvé zdraví a klid.</p>
                 </div>
 
                 <div class="methods-list">
                     <div class="method-card">
-                        <h3>1. Klasický kondom</h3>
+                        <h3>1. Klasický kondom (Základní bariéra)</h3>
                         <ul>
-                            <li><strong>✅ Výhody:</strong> Ochrana před otěhotněním i pohlavními nemocemi (STD).</li>
-                            <li><strong>❌ Nevýhody:</strong> Někomu může mírně snižovat citlivost.</li>
-                            <li><strong>⚠️ Rizika:</strong> Při špatném nasazení může prasknout nebo sklouznout.</li>
+                            <li><strong>✅ Výhody:</strong> Nejlepší ochrana proti pohlavním nemocem (STD) a těhotenství zároveň.</li>
+                            <li><strong>❌ Nevýhody:</strong> Nutnost správného nasazení, jinak hrozí protržení.</li>
                         </ul>
-                        <button class="btn-buy" onclick="addToCart('Klasický kondom (3ks)', 59)">Koupit hned - 59 Kč</button>
+                        <button class="btn-buy" onclick="addToCart('Klasický kondom (3ks)', 59)">Do košíku - 59 Kč</button>
                     </div>
 
                     <div class="method-card">
-                        <h3>2. Tenký kondom (Ultra Thin)</h3>
+                        <h3>2. Dámský kondom (Pesar/Femidom)</h3>
                         <ul>
-                            <li><strong>✅ Výhody:</strong> Maximální citlivost, pocit "kůže na kůži".</li>
-                            <li><strong>❌ Nevýhody:</strong> Obvykle o něco dražší než klasika.</li>
-                            <li><strong>⚠️ Rizika:</strong> Vyžaduje opatrnější manipulaci (např. pozor na nehty).</li>
+                            <li><strong>✅ Výhody:</strong> Lze zavést předem, poskytuje širší ochranu vnějších partií proti virům (např. HPV).</li>
+                            <li><strong>❌ Nevýhody:</strong> Vyžaduje cvik při zavádění, o něco dražší.</li>
                         </ul>
-                        <button class="btn-buy" onclick="addToCart('Tenký kondom (3ks)', 89)">Koupit hned - 89 Kč</button>
+                        <button class="btn-buy" onclick="addToCart('Dámský kondom (1ks)', 120)">Do košíku - 120 Kč</button>
                     </div>
 
                     <div class="method-card">
                         <h3>3. Lubrikační gel (Vodní báze)</h3>
                         <ul>
-                            <li><strong>✅ Výhody:</strong> Zabraňuje odřeninám, zvyšuje komfort a potěšení.</li>
-                            <li><strong>❌ Nevýhody:</strong> Může rychleji zasychat, nutno přidávat.</li>
-                            <li><strong>⚠️ Rizika:</strong> Pozor – na latexové kondomy nepoužívej gely na olejové bázi! Naše vodní báze je 100% bezpečná.</li>
+                            <li><strong>✅ Výhody:</strong> Zabraňuje protržení kondomu snížením tření. Bezpečný pro latex.</li>
+                            <li><strong>❌ Nevýhody:</strong> Sám o sobě nechrání proti nemocem ani těhotenství, je to doplněk.</li>
                         </ul>
-                        <button class="btn-buy" onclick="addToCart('Lubrikační gel (Vodní)', 149)">Koupit hned - 149 Kč</button>
+                        <button class="btn-buy" onclick="addToCart('Lubrikační gel Aqua', 149)">Do košíku - 149 Kč</button>
                     </div>
 
                     <div class="method-card">
-                        <h3>4. Dámský kondom</h3>
+                        <h3>4. Spermicidní krém</h3>
                         <ul>
-                            <li><strong>✅ Výhody:</strong> Lze zavést už před sexem, chrání i vnější část genitálií.</li>
-                            <li><strong>❌ Nevýhody:</strong> Vyžaduje trochu cviku při zavádění.</li>
-                            <li><strong>⚠️ Rizika:</strong> Může se při neopatrném pohybu posunout.</li>
+                            <li><strong>✅ Výhody:</strong> Hubí spermie, skvělý pojistný doplněk ke kondomu proti otěhotnění.</li>
+                            <li><strong>❌ Nevýhody:</strong> <strong>Nechrání před nemocemi!</strong> Může u citlivých osob způsobit podráždění.</li>
                         </ul>
-                        <button class="btn-buy" onclick="addToCart('Dámský kondom (1ks)', 120)">Koupit hned - 120 Kč</button>
+                        <button class="btn-buy" onclick="addToCart('Spermicidní krém', 199)">Do košíku - 199 Kč</button>
                     </div>
 
                     <div class="method-card">
-                        <h3>5. Antikoncepční pěna (Spermicid)</h3>
+                        <h3>5. Latexová rouška (Dental dam)</h3>
                         <ul>
-                            <li><strong>✅ Výhody:</strong> Nenarušuje hormony, působí jako lubrikant.</li>
-                            <li><strong>❌ Nevýhody:</strong> <strong>Nechrání před STD!</strong> (Pohlavními nemocemi).</li>
-                            <li><strong>⚠️ Rizika:</strong> Nižší ochrana proti otěhotnění než kondom, ideální spíše jako doplněk.</li>
+                            <li><strong>✅ Výhody:</strong> Zásadní ochrana proti přenosu nemocí při orálním sexu.</li>
+                            <li><strong>❌ Nevýhody:</strong> Méně známá a někdy hůře dostupná (u nás ji ale máme!).</li>
                         </ul>
-                        <button class="btn-buy" onclick="addToCart('Antikoncepční pěna', 199)">Koupit hned - 199 Kč</button>
+                        <button class="btn-buy" onclick="addToCart('Latexová rouška', 89)">Do košíku - 89 Kč</button>
                     </div>
                 </div>
             </section>
 
             <section id="shop" class="page-section">
                 <div class="section-header">
-                    <h2>E-Shop</h2>
-                    <p>Vyber si přesně to, co potřebuješ pro bezpečný zážitek.</p>
+                    <h2>Rychlý nákup</h2>
+                    <p>Všechny produkty z našeho Top 5 výběru pohromadě.</p>
                 </div>
                 <div class="products-grid">
                     <div class="product-card">
-                        <div class="img-placeholder">🍓</div>
-                        <h3>Kondomy Jahoda</h3>
-                        <p>150 Kč</p>
-                        <button class="btn-buy" onclick="addToCart('Kondomy Jahoda', 150)">Do košíku</button>
+                        <div class="img-placeholder">🛡️</div>
+                        <h3>Klasický kondom</h3>
+                        <p>59 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Klasický kondom (3ks)', 59)">Do košíku</button>
                     </div>
                     <div class="product-card">
-                        <div class="img-placeholder">💦</div>
+                        <div class="img-placeholder">🌸</div>
+                        <h3>Dámský kondom</h3>
+                        <p>120 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Dámský kondom (1ks)', 120)">Do košíku</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="img-placeholder">💧</div>
                         <h3>Lubrikant Aqua</h3>
-                        <p>220 Kč</p>
-                        <button class="btn-buy" onclick="addToCart('Lubrikant Aqua', 220)">Do košíku</button>
+                        <p>149 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Lubrikační gel Aqua', 149)">Do košíku</button>
                     </div>
                     <div class="product-card">
-                        <div class="img-placeholder">🍌</div>
-                        <h3>Kondomy XXL</h3>
-                        <p>180 Kč</p>
-                        <button class="btn-buy" onclick="addToCart('Kondomy XXL', 180)">Do košíku</button>
+                        <div class="img-placeholder">🧴</div>
+                        <h3>Spermicidní krém</h3>
+                        <p>199 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Spermicidní krém', 199)">Do košíku</button>
+                    </div>
+                    <div class="product-card">
+                        <div class="img-placeholder">😷</div>
+                        <h3>Latexová rouška</h3>
+                        <p>89 Kč</p>
+                        <button class="btn-buy" onclick="addToCart('Latexová rouška', 89)">Do košíku</button>
                     </div>
                 </div>
             </section>
@@ -122,16 +282,73 @@
         <aside class="global-cart">
             <h2>Tvůj Košík 🛒</h2>
             <ul id="cart-items">
-                <li id="empty-msg">Košík je prázdný</li>
+                <li id="empty-msg" style="color: #6c757d;">Košík je prázdný</li>
             </ul>
             <div class="total">
                 <strong>Celkem: <span id="total-price">0</span> Kč</strong>
             </div>
-            <button class="btn-order" onclick="alert('Toto je pouze demo lékárny. Objednávka se nikam neodeslala. 😊')">Objednat</button>
+            <button class="btn-order" onclick="alert('Toto je pouze demo lékárny. Objednávka se nikam neodeslala. Děkujeme za vyzkoušení! 😊')">Odeslat objednávku</button>
         </aside>
 
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let cart = [];
+        let total = 0;
+
+        // Přepínání stránek
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Přidání do košíku
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            
+            // Animace tlačítka "Objednat" po přidání do košíku
+            const orderBtn = document.querySelector('.btn-order');
+            orderBtn.style.transform = 'scale(1.05)';
+            setTimeout(() => { orderBtn.style.transform = 'scale(1)'; }, 200);
+        }
+
+        // Odebrání z košíku
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Vykreslení košíku
+        function updateCartUI() {
+            const cartList = document.getElementById('cart-items');
+            const totalDisplay = document.getElementById('total-price');
+            
+            cartList.innerHTML = "";
+            total = 0;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li id="empty-msg" style="color: #6c757d;">Košík je prázdný</li>';
+            } else {
+                cart.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${item.name}</span>
+                        <span>
+                            <strong>${item.price} Kč</strong>
+                            <button class="remove-btn" onclick="removeFromCart(${index})" title="Odebrat">×</button>
+                        </span>
+                    `;
+                    cartList.appendChild(li);
+                    total += item.price;
+                });
+            }
+            
+            totalDisplay.innerText = total;
+        }
+    </script>
 </body>
 </html>
